@@ -1,0 +1,800 @@
+[
+  {
+    "id": 1,
+    "transliterationName": "Al-Faatiha",
+    "arabicName": "ٱلْفَاتِحَةِ",
+    "revelationType": "Meccan",
+    "verseCount": 7
+  },
+  {
+    "id": 2,
+    "transliterationName": "Al-Baqara",
+    "arabicName": "البَقَرَةِ",
+    "revelationType": "Medinan",
+    "verseCount": 286
+  },
+  {
+    "id": 3,
+    "transliterationName": "Aal-i-Imraan",
+    "arabicName": "آلِ عِمۡرَانَ",
+    "revelationType": "Medinan",
+    "verseCount": 200
+  },
+  {
+    "id": 4,
+    "transliterationName": "An-Nisaa",
+    "arabicName": "النِّسَاءِ",
+    "revelationType": "Medinan",
+    "verseCount": 176
+  },
+  {
+    "id": 5,
+    "transliterationName": "Al-Maaida",
+    "arabicName": "المَائـِدَةِ",
+    "revelationType": "Medinan",
+    "verseCount": 120
+  },
+  {
+    "id": 6,
+    "transliterationName": "Al-An'aam",
+    "arabicName": "الأَنۡعَامِ",
+    "revelationType": "Meccan",
+    "verseCount": 165
+  },
+  {
+    "id": 7,
+    "transliterationName": "Al-A'raaf",
+    "arabicName": "الأَعۡرَافِ",
+    "revelationType": "Meccan",
+    "verseCount": 206
+  },
+  {
+    "id": 8,
+    "transliterationName": "Al-Anfaal",
+    "arabicName": "الأَنفَالِ",
+    "revelationType": "Medinan",
+    "verseCount": 75
+  },
+  {
+    "id": 9,
+    "transliterationName": "At-Tawba",
+    "arabicName": "التَّوۡبَةِ",
+    "revelationType": "Medinan",
+    "verseCount": 129
+  },
+  {
+    "id": 10,
+    "transliterationName": "Yunus",
+    "arabicName": "يُونُسَ",
+    "revelationType": "Meccan",
+    "verseCount": 109
+  },
+  {
+    "id": 11,
+    "transliterationName": "Hud",
+    "arabicName": "هُودٍ",
+    "revelationType": "Meccan",
+    "verseCount": 123
+  },
+  {
+    "id": 12,
+    "transliterationName": "Yusuf",
+    "arabicName": "يُوسُفَ",
+    "revelationType": "Meccan",
+    "verseCount": 111
+  },
+  {
+    "id": 13,
+    "transliterationName": "Ar-Ra'd",
+    "arabicName": "الرَّعۡدِ",
+    "revelationType": "Medinan",
+    "verseCount": 43
+  },
+  {
+    "id": 14,
+    "transliterationName": "Ibrahim",
+    "arabicName": "إِبۡرَاهِيمَ",
+    "revelationType": "Meccan",
+    "verseCount": 52
+  },
+  {
+    "id": 15,
+    "transliterationName": "Al-Hijr",
+    "arabicName": "الحِجۡرِ",
+    "revelationType": "Meccan",
+    "verseCount": 99
+  },
+  {
+    "id": 16,
+    "transliterationName": "An-Nahl",
+    "arabicName": "النَّحۡلِ",
+    "revelationType": "Meccan",
+    "verseCount": 128
+  },
+  {
+    "id": 17,
+    "transliterationName": "Al-Israa",
+    "arabicName": "الإِسۡرَاءِ",
+    "revelationType": "Meccan",
+    "verseCount": 111
+  },
+  {
+    "id": 18,
+    "transliterationName": "Al-Kahf",
+    "arabicName": "الكَهۡفِ",
+    "revelationType": "Meccan",
+    "verseCount": 110
+  },
+  {
+    "id": 19,
+    "transliterationName": "Maryam",
+    "arabicName": "مَرۡيَمَ",
+    "revelationType": "Meccan",
+    "verseCount": 98
+  },
+  {
+    "id": 20,
+    "transliterationName": "Taa-Haa",
+    "arabicName": "طه",
+    "revelationType": "Meccan",
+    "verseCount": 135
+  },
+  {
+    "id": 21,
+    "transliterationName": "Al-Anbiyaa",
+    "arabicName": "الأَنبِيَاءِ",
+    "revelationType": "Meccan",
+    "verseCount": 112
+  },
+  {
+    "id": 22,
+    "transliterationName": "Al-Hajj",
+    "arabicName": "الحَجِّ",
+    "revelationType": "Medinan",
+    "verseCount": 78
+  },
+  {
+    "id": 23,
+    "transliterationName": "Al-Muminoon",
+    "arabicName": "المُؤۡمِنُونَ",
+    "revelationType": "Meccan",
+    "verseCount": 118
+  },
+  {
+    "id": 24,
+    "transliterationName": "An-Noor",
+    "arabicName": "النُّورِ",
+    "revelationType": "Medinan",
+    "verseCount": 64
+  },
+  {
+    "id": 25,
+    "transliterationName": "Al-Furqaan",
+    "arabicName": "الفُرۡقَانِ",
+    "revelationType": "Meccan",
+    "verseCount": 77
+  },
+  {
+    "id": 26,
+    "transliterationName": "Ash-Shu'araa",
+    "arabicName": "الشُّعَرَاءِ",
+    "revelationType": "Meccan",
+    "verseCount": 227
+  },
+  {
+    "id": 27,
+    "transliterationName": "An-Naml",
+    "arabicName": "النَّمۡلِ",
+    "revelationType": "Meccan",
+    "verseCount": 93
+  },
+  {
+    "id": 28,
+    "transliterationName": "Al-Qasas",
+    "arabicName": "القَصَصِ",
+    "revelationType": "Meccan",
+    "verseCount": 88
+  },
+  {
+    "id": 29,
+    "transliterationName": "Al-Ankaboot",
+    "arabicName": "العَنكَبُوتِ",
+    "revelationType": "Meccan",
+    "verseCount": 69
+  },
+  {
+    "id": 30,
+    "transliterationName": "Ar-Room",
+    "arabicName": "الرُّومِ",
+    "revelationType": "Meccan",
+    "verseCount": 60
+  },
+  {
+    "id": 31,
+    "transliterationName": "Luqman",
+    "arabicName": "لُقۡمَانَ",
+    "revelationType": "Meccan",
+    "verseCount": 34
+  },
+  {
+    "id": 32,
+    "transliterationName": "As-Sajda",
+    "arabicName": "السَّجۡدَةِ",
+    "revelationType": "Meccan",
+    "verseCount": 30
+  },
+  {
+    "id": 33,
+    "transliterationName": "Al-Ahzaab",
+    "arabicName": "الأَحۡزَابِ",
+    "revelationType": "Medinan",
+    "verseCount": 73
+  },
+  {
+    "id": 34,
+    "transliterationName": "Saba",
+    "arabicName": "سَبَإٍ",
+    "revelationType": "Meccan",
+    "verseCount": 54
+  },
+  {
+    "id": 35,
+    "transliterationName": "Faatir",
+    "arabicName": "فَاطِرٍ",
+    "revelationType": "Meccan",
+    "verseCount": 45
+  },
+  {
+    "id": 36,
+    "transliterationName": "Yaseen",
+    "arabicName": "يسٓ",
+    "revelationType": "Meccan",
+    "verseCount": 83
+  },
+  {
+    "id": 37,
+    "transliterationName": "As-Saaffaat",
+    "arabicName": "الصَّافَّاتِ",
+    "revelationType": "Meccan",
+    "verseCount": 182
+  },
+  {
+    "id": 38,
+    "transliterationName": "Saad",
+    "arabicName": "صٓ",
+    "revelationType": "Meccan",
+    "verseCount": 88
+  },
+  {
+    "id": 39,
+    "transliterationName": "Az-Zumar",
+    "arabicName": "الزُّمَرِ",
+    "revelationType": "Meccan",
+    "verseCount": 75
+  },
+  {
+    "id": 40,
+    "transliterationName": "Ghafir",
+    "arabicName": "غَافِرٍ",
+    "revelationType": "Meccan",
+    "verseCount": 85
+  },
+  {
+    "id": 41,
+    "transliterationName": "Fussilat",
+    "arabicName": "فُصِّلَتۡ",
+    "revelationType": "Meccan",
+    "verseCount": 54
+  },
+  {
+    "id": 42,
+    "transliterationName": "Ash-Shura",
+    "arabicName": "الشُّورَىٰ",
+    "revelationType": "Meccan",
+    "verseCount": 53
+  },
+  {
+    "id": 43,
+    "transliterationName": "Az-Zukhruf",
+    "arabicName": "الزُّخۡرُفِ",
+    "revelationType": "Meccan",
+    "verseCount": 89
+  },
+  {
+    "id": 44,
+    "transliterationName": "Ad-Dukhaan",
+    "arabicName": "الدُّخَانِ",
+    "revelationType": "Meccan",
+    "verseCount": 59
+  },
+  {
+    "id": 45,
+    "transliterationName": "Al-Jaathiya",
+    "arabicName": "الجَاثِيَةِ",
+    "revelationType": "Meccan",
+    "verseCount": 37
+  },
+  {
+    "id": 46,
+    "transliterationName": "Al-Ahqaf",
+    "arabicName": "الأَحۡقَافِ",
+    "revelationType": "Meccan",
+    "verseCount": 35
+  },
+  {
+    "id": 47,
+    "transliterationName": "Muhammad",
+    "arabicName": "مُحَمَّدٍ",
+    "revelationType": "Medinan",
+    "verseCount": 38
+  },
+  {
+    "id": 48,
+    "transliterationName": "Al-Fath",
+    "arabicName": "الفَتۡحِ",
+    "revelationType": "Medinan",
+    "verseCount": 29
+  },
+  {
+    "id": 49,
+    "transliterationName": "Al-Hujuraat",
+    "arabicName": "الحُجُرَاتِ",
+    "revelationType": "Medinan",
+    "verseCount": 18
+  },
+  {
+    "id": 50,
+    "transliterationName": "Qaaf",
+    "arabicName": "قٓ",
+    "revelationType": "Meccan",
+    "verseCount": 45
+  },
+  {
+    "id": 51,
+    "transliterationName": "Adh-Dhaariyat",
+    "arabicName": "الذَّارِيَاتِ",
+    "revelationType": "Meccan",
+    "verseCount": 60
+  },
+  {
+    "id": 52,
+    "transliterationName": "At-Tur",
+    "arabicName": "الطُّورِ",
+    "revelationType": "Meccan",
+    "verseCount": 49
+  },
+  {
+    "id": 53,
+    "transliterationName": "An-Najm",
+    "arabicName": "النَّجۡمِ",
+    "revelationType": "Meccan",
+    "verseCount": 62
+  },
+  {
+    "id": 54,
+    "transliterationName": "Al-Qamar",
+    "arabicName": "القَمَرِ",
+    "revelationType": "Meccan",
+    "verseCount": 55
+  },
+  {
+    "id": 55,
+    "transliterationName": "Ar-Rahmaan",
+    "arabicName": "الرَّحۡمَٰن",
+    "revelationType": "Medinan",
+    "verseCount": 78
+  },
+  {
+    "id": 56,
+    "transliterationName": "Al-Waaqia",
+    "arabicName": "الوَاقِعَةِ",
+    "revelationType": "Meccan",
+    "verseCount": 96
+  },
+  {
+    "id": 57,
+    "transliterationName": "Al-Hadid",
+    "arabicName": "الحَدِيدِ",
+    "revelationType": "Medinan",
+    "verseCount": 29
+  },
+  {
+    "id": 58,
+    "transliterationName": "Al-Mujaadila",
+    "arabicName": "المُجَادلَةِ",
+    "revelationType": "Medinan",
+    "verseCount": 22
+  },
+  {
+    "id": 59,
+    "transliterationName": "Al-Hashr",
+    "arabicName": "الحَشۡرِ",
+    "revelationType": "Medinan",
+    "verseCount": 24
+  },
+  {
+    "id": 60,
+    "transliterationName": "Al-Mumtahana",
+    "arabicName": "المُمۡتَحنَةِ",
+    "revelationType": "Medinan",
+    "verseCount": 13
+  },
+  {
+    "id": 61,
+    "transliterationName": "As-Saff",
+    "arabicName": "الصَّفِّ",
+    "revelationType": "Medinan",
+    "verseCount": 14
+  },
+  {
+    "id": 62,
+    "transliterationName": "Al-Jumu'a",
+    "arabicName": "الجُمُعَةِ",
+    "revelationType": "Medinan",
+    "verseCount": 11
+  },
+  {
+    "id": 63,
+    "transliterationName": "Al-Munaafiqoon",
+    "arabicName": "المُنَافِقُونَ",
+    "revelationType": "Medinan",
+    "verseCount": 11
+  },
+  {
+    "id": 64,
+    "transliterationName": "At-Taghaabun",
+    "arabicName": "التَّغَابُنِ",
+    "revelationType": "Medinan",
+    "verseCount": 18
+  },
+  {
+    "id": 65,
+    "transliterationName": "At-Talaaq",
+    "arabicName": "الطَّلَاقِ",
+    "revelationType": "Medinan",
+    "verseCount": 12
+  },
+  {
+    "id": 66,
+    "transliterationName": "At-Tahrim",
+    "arabicName": "التَّحۡرِيمِ",
+    "revelationType": "Medinan",
+    "verseCount": 12
+  },
+  {
+    "id": 67,
+    "transliterationName": "Al-Mulk",
+    "arabicName": "المُلۡكِ",
+    "revelationType": "Meccan",
+    "verseCount": 30
+  },
+  {
+    "id": 68,
+    "transliterationName": "Al-Qalam",
+    "arabicName": "القَلَمِ",
+    "revelationType": "Meccan",
+    "verseCount": 52
+  },
+  {
+    "id": 69,
+    "transliterationName": "Al-Haaqqa",
+    "arabicName": "الحَاقَّةِ",
+    "revelationType": "Meccan",
+    "verseCount": 52
+  },
+  {
+    "id": 70,
+    "transliterationName": "Al-Ma'aarij",
+    "arabicName": "المَعَارِجِ",
+    "revelationType": "Meccan",
+    "verseCount": 44
+  },
+  {
+    "id": 71,
+    "transliterationName": "Nooh",
+    "arabicName": "نُوحٍ",
+    "revelationType": "Meccan",
+    "verseCount": 28
+  },
+  {
+    "id": 72,
+    "transliterationName": "Al-Jinn",
+    "arabicName": "الجِنِّ",
+    "revelationType": "Meccan",
+    "verseCount": 28
+  },
+  {
+    "id": 73,
+    "transliterationName": "Al-Muzzammil",
+    "arabicName": "المُزَّمِّلِ",
+    "revelationType": "Meccan",
+    "verseCount": 20
+  },
+  {
+    "id": 74,
+    "transliterationName": "Al-Muddaththir",
+    "arabicName": "المُدَّثِّرِ",
+    "revelationType": "Meccan",
+    "verseCount": 56
+  },
+  {
+    "id": 75,
+    "transliterationName": "Al-Qiyaama",
+    "arabicName": "القِيَامَةِ",
+    "revelationType": "Meccan",
+    "verseCount": 40
+  },
+  {
+    "id": 76,
+    "transliterationName": "Al-Insaan",
+    "arabicName": "الإِنسَانِ",
+    "revelationType": "Medinan",
+    "verseCount": 31
+  },
+  {
+    "id": 77,
+    "transliterationName": "Al-Mursalaat",
+    "arabicName": "المُرۡسَلَاتِ",
+    "revelationType": "Meccan",
+    "verseCount": 50
+  },
+  {
+    "id": 78,
+    "transliterationName": "An-Naba",
+    "arabicName": "النَّبَإِ",
+    "revelationType": "Meccan",
+    "verseCount": 40
+  },
+  {
+    "id": 79,
+    "transliterationName": "An-Naazi'aat",
+    "arabicName": "النَّازِعَاتِ",
+    "revelationType": "Meccan",
+    "verseCount": 46
+  },
+  {
+    "id": 80,
+    "transliterationName": "Abasa",
+    "arabicName": "عَبَسَ",
+    "revelationType": "Meccan",
+    "verseCount": 42
+  },
+  {
+    "id": 81,
+    "transliterationName": "At-Takwir",
+    "arabicName": "التَّكۡوِيرِ",
+    "revelationType": "Meccan",
+    "verseCount": 29
+  },
+  {
+    "id": 82,
+    "transliterationName": "Al-Infitaar",
+    "arabicName": "الانفِطَارِ",
+    "revelationType": "Meccan",
+    "verseCount": 19
+  },
+  {
+    "id": 83,
+    "transliterationName": "Al-Mutaffifin",
+    "arabicName": "المُطَفِّفِينَ",
+    "revelationType": "Meccan",
+    "verseCount": 36
+  },
+  {
+    "id": 84,
+    "transliterationName": "Al-Inshiqaaq",
+    "arabicName": "الانشِقَاقِ",
+    "revelationType": "Meccan",
+    "verseCount": 25
+  },
+  {
+    "id": 85,
+    "transliterationName": "Al-Burooj",
+    "arabicName": "البُرُوجِ",
+    "revelationType": "Meccan",
+    "verseCount": 22
+  },
+  {
+    "id": 86,
+    "transliterationName": "At-Taariq",
+    "arabicName": "الطَّارِقِ",
+    "revelationType": "Meccan",
+    "verseCount": 17
+  },
+  {
+    "id": 87,
+    "transliterationName": "Al-A'laa",
+    "arabicName": "الأَعۡلَىٰ",
+    "revelationType": "Meccan",
+    "verseCount": 19
+  },
+  {
+    "id": 88,
+    "transliterationName": "Al-Ghaashiya",
+    "arabicName": "الغَاشِيَةِ",
+    "revelationType": "Meccan",
+    "verseCount": 26
+  },
+  {
+    "id": 89,
+    "transliterationName": "Al-Fajr",
+    "arabicName": "الفَجۡرِ",
+    "revelationType": "Meccan",
+    "verseCount": 30
+  },
+  {
+    "id": 90,
+    "transliterationName": "Al-Balad",
+    "arabicName": "البَلَدِ",
+    "revelationType": "Meccan",
+    "verseCount": 20
+  },
+  {
+    "id": 91,
+    "transliterationName": "Ash-Shams",
+    "arabicName": "الشَّمۡسِ",
+    "revelationType": "Meccan",
+    "verseCount": 15
+  },
+  {
+    "id": 92,
+    "transliterationName": "Al-Lail",
+    "arabicName": "اللَّيۡلِ",
+    "revelationType": "Meccan",
+    "verseCount": 21
+  },
+  {
+    "id": 93,
+    "transliterationName": "Ad-Dhuhaa",
+    "arabicName": "الضُّحَىٰ",
+    "revelationType": "Meccan",
+    "verseCount": 11
+  },
+  {
+    "id": 94,
+    "transliterationName": "Ash-Sharh",
+    "arabicName": "الشَّرۡحِ",
+    "revelationType": "Meccan",
+    "verseCount": 8
+  },
+  {
+    "id": 95,
+    "transliterationName": "At-Tin",
+    "arabicName": "التِّينِ",
+    "revelationType": "Meccan",
+    "verseCount": 8
+  },
+  {
+    "id": 96,
+    "transliterationName": "Al-Alaq",
+    "arabicName": "العَلَقِ",
+    "revelationType": "Meccan",
+    "verseCount": 19
+  },
+  {
+    "id": 97,
+    "transliterationName": "Al-Qadr",
+    "arabicName": "القَدۡرِ",
+    "revelationType": "Meccan",
+    "verseCount": 5
+  },
+  {
+    "id": 98,
+    "transliterationName": "Al-Bayyina",
+    "arabicName": "البَيِّنَةِ",
+    "revelationType": "Medinan",
+    "verseCount": 8
+  },
+  {
+    "id": 99,
+    "transliterationName": "Az-Zalzala",
+    "arabicName": "الزَّلۡزَلَةِ",
+    "revelationType": "Medinan",
+    "verseCount": 8
+  },
+  {
+    "id": 100,
+    "transliterationName": "Al-Aadiyaat",
+    "arabicName": "العَادِيَاتِ",
+    "revelationType": "Meccan",
+    "verseCount": 11
+  },
+  {
+    "id": 101,
+    "transliterationName": "Al-Qaari'a",
+    "arabicName": "القَارِعَةِ",
+    "revelationType": "Meccan",
+    "verseCount": 11
+  },
+  {
+    "id": 102,
+    "transliterationName": "At-Takaathur",
+    "arabicName": "التَّكَاثُرِ",
+    "revelationType": "Meccan",
+    "verseCount": 8
+  },
+  {
+    "id": 103,
+    "transliterationName": "Al-Asr",
+    "arabicName": "العَصۡرِ",
+    "revelationType": "Meccan",
+    "verseCount": 3
+  },
+  {
+    "id": 104,
+    "transliterationName": "Al-Humaza",
+    "arabicName": "الهُمَزَةِ",
+    "revelationType": "Meccan",
+    "verseCount": 9
+  },
+  {
+    "id": 105,
+    "transliterationName": "Al-Fil",
+    "arabicName": "الفِيلِ",
+    "revelationType": "Meccan",
+    "verseCount": 5
+  },
+  {
+    "id": 106,
+    "transliterationName": "Quraish",
+    "arabicName": "قُرَيۡشٍ",
+    "revelationType": "Meccan",
+    "verseCount": 4
+  },
+  {
+    "id": 107,
+    "transliterationName": "Al-Maa'un",
+    "arabicName": "المَاعُونِ",
+    "revelationType": "Meccan",
+    "verseCount": 7
+  },
+  {
+    "id": 108,
+    "transliterationName": "Al-Kawthar",
+    "arabicName": "الكَوۡثَرِ",
+    "revelationType": "Meccan",
+    "verseCount": 3
+  },
+  {
+    "id": 109,
+    "transliterationName": "Al-Kaafiroon",
+    "arabicName": "الكَافِرُونَ",
+    "revelationType": "Meccan",
+    "verseCount": 6
+  },
+  {
+    "id": 110,
+    "transliterationName": "An-Nasr",
+    "arabicName": "النَّصۡرِ",
+    "revelationType": "Medinan",
+    "verseCount": 3
+  },
+  {
+    "id": 111,
+    "transliterationName": "Al-Masad",
+    "arabicName": "المَسَدِ",
+    "revelationType": "Meccan",
+    "verseCount": 5
+  },
+  {
+    "id": 112,
+    "transliterationName": "Al-Ikhlaas",
+    "arabicName": "الإِخۡلَاصِ",
+    "revelationType": "Meccan",
+    "verseCount": 4
+  },
+  {
+    "id": 113,
+    "transliterationName": "Al-Falaq",
+    "arabicName": "الفَلَقِ",
+    "revelationType": "Meccan",
+    "verseCount": 5
+  },
+  {
+    "id": 114,
+    "transliterationName": "An-Naas",
+    "arabicName": "النَّاسِ",
+    "revelationType": "Meccan",
+    "verseCount": 6
+  }
+]
