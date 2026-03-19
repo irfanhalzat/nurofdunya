@@ -2,8 +2,9 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2 } from 'lucide-react';
 // @ts-ignore
-import HTMLFlipBook from 'react-pageflip';
+import HTMLFlipBookRaw from 'react-pageflip';
 
+const HTMLFlipBook = HTMLFlipBookRaw as any;
 import type { GraphNode } from '../types';
 
 interface SurahReaderProps {
