@@ -40,7 +40,7 @@ export default function SurahReader({ surah, onClose }: SurahReaderProps) {
         setLoading(true);
         setError(null);
 
-        fetch(`http://api.alquran.cloud/v1/surah/${surah.id}/editions/quran-uthmani,en.asad,zh.jian`)
+        fetch(`https://api.alquran.cloud/v1/surah/${surah.id}/editions/quran-uthmani,en.asad,zh.jian`)
             .then(res => res.json())
             .then(data => {
                 if (data.code === 200 && isMounted) {
