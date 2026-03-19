@@ -209,7 +209,7 @@ export default function QuranCarousel() {
                         <div key={activeSurah.id} className="animate-fade-in pointer-events-auto">
                             {/* Arabic calligraphy name */}
                             <div
-                                className="text-6xl md:text-8xl opacity-90 leading-none pb-4 md:pb-10"
+                                className="text-6xl md:text-8xl opacity-90 leading-none pb-10 md:pb-16"
                                 style={{
                                     fontFamily: '"Amiri", serif',
                                     color: activeSurah.revelationType === 'Meccan' ? MECCAN_HEX : MEDINAN_HEX,
@@ -220,7 +220,7 @@ export default function QuranCarousel() {
                             </div>
 
                             {/* Transliteration + number */}
-                            <div className="text-2xl md:text-3xl text-[#5C574F] font-light tracking-widest pb-2 md:pb-6"
+                            <div className="text-2xl md:text-3xl text-[#5C574F] font-light tracking-widest pb-6 md:pb-10"
                                 style={{ 
                                     fontFamily: '"Inter", sans-serif',
                                 }}>
@@ -228,7 +228,7 @@ export default function QuranCarousel() {
                             </div>
 
                             {/* Meta line */}
-                            <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#8A8273] pb-6 md:pb-10">
+                            <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#8A8273] pb-8 md:pb-14">
                                 Surah {activeSurah.id} • {activeSurah.revelationType} • {activeSurah.verseCount} Verses
                             </div>
 
@@ -262,7 +262,7 @@ export default function QuranCarousel() {
                         <div>
                             {/* Default title */}
                             <div
-                                className="text-5xl md:text-7xl opacity-80 leading-none pb-4 md:pb-10"
+                                className="text-5xl md:text-7xl opacity-80 leading-none pb-10 md:pb-16"
                                 style={{
                                     fontFamily: '"Amiri", serif',
                                     color: '#96723B',
@@ -271,7 +271,9 @@ export default function QuranCarousel() {
                             >
                                 القرآن الكريم
                             </div>
-                            <div className="text-xl md:text-2xl text-[#5C574F] font-light tracking-[0.4em] uppercase pb-2 md:pb-6">
+                            <div className="text-xl md:text-2xl text-[#5C574F] font-light tracking-[0.4em] uppercase pb-8 md:pb-12"
+                                style={{
+                                }}>
                                 The Holy Quran
                             </div>
                             <div className="text-xs text-[#8A8273] tracking-[0.2em]">
