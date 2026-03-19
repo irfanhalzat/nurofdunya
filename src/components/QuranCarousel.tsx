@@ -209,31 +209,26 @@ export default function QuranCarousel() {
                         <div key={activeSurah.id} className="animate-fade-in pointer-events-auto">
                             {/* Arabic calligraphy name */}
                             <div
-                                className="text-6xl md:text-8xl opacity-90 leading-none"
+                                className="text-6xl md:text-8xl opacity-90 leading-none pb-4 md:pb-10"
                                 style={{
                                     fontFamily: '"Amiri", serif',
                                     color: activeSurah.revelationType === 'Meccan' ? MECCAN_HEX : MEDINAN_HEX,
                                     direction: 'rtl',
-                                    paddingBottom: '2.5rem', // Force huge spacing here
                                 }}
                             >
                                 {activeSurah.arabicName}
                             </div>
 
                             {/* Transliteration + number */}
-                            <div className="text-2xl md:text-3xl text-[#5C574F] font-light tracking-widest"
+                            <div className="text-2xl md:text-3xl text-[#5C574F] font-light tracking-widest pb-2 md:pb-6"
                                 style={{ 
                                     fontFamily: '"Inter", sans-serif',
-                                    paddingBottom: '1.5rem', // Force huge spacing here
                                 }}>
                                 {activeSurah.transliterationName}
                             </div>
 
                             {/* Meta line */}
-                            <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#8A8273]"
-                                style={{
-                                    paddingBottom: '2.5rem', // Force huge spacing here
-                                }}>
+                            <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#8A8273] pb-6 md:pb-10">
                                 Surah {activeSurah.id} • {activeSurah.revelationType} • {activeSurah.verseCount} Verses
                             </div>
 
@@ -267,20 +262,16 @@ export default function QuranCarousel() {
                         <div>
                             {/* Default title */}
                             <div
-                                className="text-5xl md:text-7xl opacity-80 leading-none"
+                                className="text-5xl md:text-7xl opacity-80 leading-none pb-4 md:pb-10"
                                 style={{
                                     fontFamily: '"Amiri", serif',
                                     color: '#96723B',
                                     direction: 'rtl',
-                                    paddingBottom: '2.5rem', // Match hovered state spacing
                                 }}
                             >
                                 القرآن الكريم
                             </div>
-                            <div className="text-xl md:text-2xl text-[#5C574F] font-light tracking-[0.4em] uppercase"
-                                style={{
-                                    paddingBottom: '1.5rem', // Match hovered state spacing
-                                }}>
+                            <div className="text-xl md:text-2xl text-[#5C574F] font-light tracking-[0.4em] uppercase pb-2 md:pb-6">
                                 The Holy Quran
                             </div>
                             <div className="text-xs text-[#8A8273] tracking-[0.2em]">
@@ -304,6 +295,7 @@ export default function QuranCarousel() {
                     const isMeccan = surah.revelationType === 'Meccan';
                     const color = isMeccan ? MECCAN_HEX : MEDINAN_HEX;
                     const isHovered = hoveredSurah?.id === surah.id;
+                    const rColor = isMeccan ? '150, 114, 59' : '100, 120, 150'; // RGB for boxShadow
 
                     return (
                         <div
@@ -323,10 +315,9 @@ export default function QuranCarousel() {
                                     : `rgba(255, 255, 255, 0.65)`,
                                 border: `1px solid ${isHovered ? color : 'rgba(0,0,0,0.06)'}`,
                                 boxShadow: isHovered
-                                    ? `0 20px 40px rgba(150, 114, 59, 0.15), 0 0 0 1px ${color}`
+                                    ? `0 20px 40px rgba(${rColor}, 0.15), 0 0 0 1px ${color}`
                                     : `0 4px 12px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,1)`,
-                                transition: 'box-shadow 0.3s, background 0.3s, border 0.3s, transform 0.3s',
-                                backdropFilter: 'blur(4px)',
+                                transition: 'box-shadow 0.3s, background 0.3s, border 0.3s, transform 0.3s'
                             }}
                             onMouseEnter={() => { hoveredIndexRef.current = i; setHoveredSurah(surah as Surah); setActiveSurah(surah as Surah); }}
                             onMouseLeave={() => { hoveredIndexRef.current = -1; setHoveredSurah(null); }}
@@ -384,7 +375,7 @@ export default function QuranCarousel() {
                     return (
                         <div
                             key={juz.juz}
-                            className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto cursor-pointer transition-all duration-300"
+                            className="hidden lg:flex absolute -translate-x-1/2 -translate-y-1/2 text-xs tracking-[0.2em] transition-all duration-300 font-medium cursor-pointer flex-col items-center gap-1 group"
                             style={{
                                 left: pos.left,
                                 top: pos.top,

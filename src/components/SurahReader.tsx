@@ -125,7 +125,7 @@ export default function SurahReader({ surah, onClose }: SurahReaderProps) {
                             mobileScrollSupport={true}
                             className="book-theme group"
                             ref={bookRef}
-                            usePortrait={false}
+                            usePortrait={true}
                         >
                             {/* Front Cover */}
                             <div className="page page-cover bg-[#2b1f13] border-[8px] border-double border-[#d4a04a] rounded-r-2xl overflow-hidden shadow-[inset_-5px_0_20px_rgba(0,0,0,0.8)] flex flex-col items-center justify-center">
