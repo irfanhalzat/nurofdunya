@@ -1,256 +1,195 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Loader2 } from 'lucide-react';
-// @ts-ignore
-import HTMLFlipBookRaw from 'react-pageflip';
-
-const HTMLFlipBook = HTMLFlipBookRaw as any;
+import { useEffect, useId, useRef, useState } from 'react';
+import { ArrowUp, BookOpen, LoaderCircle, RotateCcw, X } from 'lucide-react';
 import type { GraphNode } from '../types';
+import SacredDialog from './SacredDialog';
+import './reader.css';
 
 interface SurahReaderProps {
     surah: GraphNode;
     onClose: () => void;
+    initialVerse?: number;
 }
 
 interface Ayah {
     number: number;
-    text: string;
     numberInSurah: number;
+    text: string;
 }
 
-interface FetchedSurahEdition {
-    edition: { identifier: string; language: string };
-    ayahs: Ayah[];
+interface SurahText {
+    arabic: Ayah[];
+    english: Map<number, Ayah>;
+    chinese: Map<number, Ayah>;
 }
 
-// Group ayahs into readable chunks for pages
-const AYAHS_PER_PAGE = 3;
+interface RequestResult {
+    key: string;
+    data: SurahText | null;
+    error: string | null;
+}
 
-export default function SurahReader({ surah, onClose }: SurahReaderProps) {
-    const [loading, setLoading] = useState(true);
-    const [arabicAyahs, setArabicAyahs] = useState<Ayah[]>([]);
-    const [englishAyahs, setEnglishAyahs] = useState<Ayah[]>([]);
-    const [chineseAyahs, setChineseAyahs] = useState<Ayah[]>([]);
-    const [error, setError] = useState<string | null>(null);
+type Translation = 'english' | 'chinese' | 'none';
+const textCache = new Map<number, SurahText>();
 
-    const bookRef = useRef<any>(null);
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
+}
+
+function readEdition(editions: unknown[], identifier: string, expectedCount: number): Ayah[] {
+    const edition = editions.find((item) => isRecord(item) && isRecord(item.edition) && item.edition.identifier === identifier);
+    if (!isRecord(edition) || !Array.isArray(edition.ayahs) || edition.ayahs.length !== expectedCount) {
+        throw new Error('A complete text edition could not be loaded. Please try again.');
+    }
+    const ayahs = edition.ayahs.map((value: unknown): Ayah => {
+        if (!isRecord(value) || typeof value.text !== 'string' || !value.text.trim()
+            || typeof value.number !== 'number' || !Number.isInteger(value.number)
+            || typeof value.numberInSurah !== 'number' || !Number.isInteger(value.numberInSurah)) {
+            throw new Error('The text service returned an incomplete verse. Please try again.');
+        }
+        return { number: value.number, numberInSurah: value.numberInSurah, text: value.text };
+    }).sort((a, b) => a.numberInSurah - b.numberInSurah);
+    if (ayahs.some((ayah, index) => ayah.numberInSurah !== index + 1)) {
+        throw new Error('The verse numbers could not be aligned. Please try again.');
+    }
+    return ayahs;
+}
+
+export default function SurahReader({ surah, onClose, initialVerse = 1 }: SurahReaderProps) {
+    const titleId = useId();
+    const translationId = useId();
+    const contentRef = useRef<HTMLDivElement>(null);
+    const [translation, setTranslation] = useState<Translation>('english');
+    const [attempt, setAttempt] = useState(0);
+    const [result, setResult] = useState<RequestResult>({ key: '', data: null, error: null });
+    const requestKey = `${surah.id}:${attempt}`;
+    const text = textCache.get(surah.id) ?? (result.key === requestKey ? result.data : null);
+    const error = result.key === requestKey ? result.error : null;
+    const loading = !text && !error;
 
     useEffect(() => {
-        let isMounted = true;
-        setLoading(true);
-        setError(null);
+        if (textCache.has(surah.id)) return;
+        const controller = new AbortController();
+        let active = true;
+        let timedOut = false;
+        const timeout = window.setTimeout(() => { timedOut = true; controller.abort(); }, 15_000);
 
-        fetch(`https://api.alquran.cloud/v1/surah/${surah.id}/editions/quran-uthmani,en.asad,zh.jian`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.code === 200 && isMounted) {
-                    // API returns array of editions
-                    const ar = data.data.find((e: FetchedSurahEdition) => e.edition.language === 'ar');
-                    const en = data.data.find((e: FetchedSurahEdition) => e.edition.language === 'en');
-                    const zh = data.data.find((e: FetchedSurahEdition) => e.edition.language === 'zh');
-                    setArabicAyahs(ar?.ayahs || []);
-                    setEnglishAyahs(en?.ayahs || []);
-                    setChineseAyahs(zh?.ayahs || []);
-                    setLoading(false);
-                } else if (isMounted) {
-                    setError('Failed to load Surah text.');
-                    setLoading(false);
+        async function loadText() {
+            try {
+                const response = await fetch(`https://api.alquran.cloud/v1/surah/${surah.id}/editions/quran-uthmani,en.asad,zh.jian`, {
+                    signal: controller.signal,
+                });
+                if (!response.ok) throw new Error('The text service is unavailable. Please try again.');
+                const payload: unknown = await response.json();
+                if (!isRecord(payload) || payload.code !== 200 || !Array.isArray(payload.data)) {
+                    throw new Error('The text service could not return this surah. Please try again.');
                 }
-            })
-            .catch(() => {
-                if (isMounted) {
-                    setError('Network error while loading Surah.');
-                    setLoading(false);
+                const arabic = readEdition(payload.data, 'quran-uthmani', surah.verseCount);
+                const english = readEdition(payload.data, 'en.asad', surah.verseCount);
+                const chinese = readEdition(payload.data, 'zh.jian', surah.verseCount);
+                const data: SurahText = {
+                    arabic,
+                    english: new Map(english.map((ayah) => [ayah.numberInSurah, ayah])),
+                    chinese: new Map(chinese.map((ayah) => [ayah.numberInSurah, ayah])),
+                };
+                if (active) {
+                    textCache.set(surah.id, data);
+                    setResult({ key: requestKey, data, error: null });
                 }
-            });
-
-        return () => { isMounted = false; };
-    }, [surah.id]);
-
-    // Create chunks pairs [English Chunk, Arabic Chunk, Chinese Chunk] parallel
-    const pages = useMemo(() => {
-        if (!arabicAyahs.length || !englishAyahs.length || !chineseAyahs.length) return [];
-
-        const chunks = [];
-        for (let i = 0; i < arabicAyahs.length; i += AYAHS_PER_PAGE) {
-            chunks.push({
-                ar: arabicAyahs.slice(i, i + AYAHS_PER_PAGE),
-                en: englishAyahs.slice(i, i + AYAHS_PER_PAGE),
-                zh: chineseAyahs.slice(i, i + AYAHS_PER_PAGE)
-            });
+            } catch (failure) {
+                if (!active) return;
+                const message = timedOut
+                    ? 'The text service took too long to respond. Please try again.'
+                    : failure instanceof Error && failure.name !== 'AbortError'
+                        ? failure.message
+                        : 'A connection could not be established. Please try again.';
+                setResult({ key: requestKey, data: null, error: message });
+            } finally {
+                window.clearTimeout(timeout);
+            }
         }
-        return chunks;
-    }, [arabicAyahs, englishAyahs, chineseAyahs]);
+        void loadText();
+        return () => { active = false; window.clearTimeout(timeout); controller.abort(); };
+    }, [surah.id, surah.verseCount, requestKey]);
+
+    useEffect(() => {
+        if (!text) return;
+        const verse = Math.min(Math.max(1, initialVerse), text.arabic.length);
+        const frame = requestAnimationFrame(() => {
+            const content = contentRef.current;
+            const target = content?.querySelector<HTMLElement>(`[data-verse="${verse}"]`);
+            if (content && target) {
+                const top = target.getBoundingClientRect().top - content.getBoundingClientRect().top + content.scrollTop - 24;
+                content.scrollTo({ top, behavior: 'instant' });
+            }
+        });
+        return () => cancelAnimationFrame(frame);
+    }, [text, initialVerse]);
 
     return (
-        <AnimatePresence>
-            <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="absolute inset-0 z-50 flex items-center justify-center pointer-events-auto"
-            >
-                {/* Dark overlay backdrop */}
-                <div className="absolute inset-0 bg-[#000011]/80 backdrop-blur-md" onClick={onClose} />
-
-                {/* Close Button */}
-                <button
-                    onClick={onClose}
-                    className="absolute top-8 right-8 text-white/60 hover:text-amber-400 transition-colors z-50 p-2 rounded-full bg-white/5 hover:bg-white/10"
-                >
-                    <X size={32} />
-                </button>
-
-                {/* Book Container */}
-                <div className="relative z-10 drop-shadow-2xl">
-                    {loading ? (
-                        <div className="flex flex-col items-center justify-center text-amber-500/70 p-20 bg-[#070a1e]/80 rounded-2xl border border-amber-500/20 shadow-[0_0_50px_rgba(245,158,11,0.1)]">
-                            <Loader2 className="animate-spin mb-4" size={48} />
-                            <p className="font-light tracking-widest text-sm text-white/70">CALLING THE SCROLLS...</p>
+        <SacredDialog onClose={onClose} labelledBy={titleId} className="reader-dialog">
+            <div className="reader-shell">
+                <header className="reader-header">
+                    <div className="reader-header-topline">
+                        <p className="reader-eyebrow">THE HOLY QURAN / SURAH {String(surah.id).padStart(3, '0')}</p>
+                        <button className="reader-close" onClick={onClose} aria-label="Close reader" autoFocus><X size={20} /></button>
+                    </div>
+                    <div className="reader-heading-layout">
+                        <div className="reader-heading-text">
+                            <h2 id={titleId} className="reader-title">{surah.name}</h2>
+                            <p className="reader-meta">{surah.revelationType} · {surah.verseCount} verses</p>
                         </div>
-                    ) : error ? (
-                        <div className="text-red-400 p-8 bg-black/50 rounded-lg">{error}</div>
-                    ) : (
-                        <HTMLFlipBook
-                            width={500}
-                            height={700}
-                            size="fixed"
-                            minWidth={315}
-                            maxWidth={1000}
-                            minHeight={400}
-                            maxHeight={1533}
-                            maxShadowOpacity={0.5}
-                            showCover={true}
-                            mobileScrollSupport={true}
-                            className="book-theme group"
-                            ref={bookRef}
-                            usePortrait={true}
-                        >
-                            {/* Front Cover */}
-                            <div className="page page-cover bg-[#2b1f13] border-[8px] border-double border-[#d4a04a] rounded-r-2xl overflow-hidden shadow-[inset_-5px_0_20px_rgba(0,0,0,0.8)] flex flex-col items-center justify-center">
-                                <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/leather.png')]" />
-                                <div className="z-10 text-center px-8 relative">
-                                    <div className="border-[4px] border-double border-[#d4a04a]/70 p-6 rounded-lg bg-[#241a10]">
-                                        <h1 className="text-[#d4a04a] text-6xl font-bold mb-6 drop-shadow-lg" style={{ fontFamily: 'Amiri, serif' }}>
-                                            {surah.arabicName}
-                                        </h1>
-                                        <h2 className="text-[#f4ecd8] text-3xl font-light tracking-wide mb-2" style={{ fontFamily: '"Crimson Pro", serif' }}>
-                                            {surah.name}
-                                        </h2>
-                                        <div className="flex items-center justify-center gap-4 text-[#d4a04a]/80 mt-8 text-sm tracking-widest uppercase" style={{ fontFamily: '"Crimson Pro", serif' }}>
-                                            <span>{surah.revelationType}</span>
-                                            <span>•</span>
-                                            <span>{surah.verseCount} Verses</span>
-                                        </div>
-                                    </div>
-                                    <p className="text-[#d4a04a]/50 text-xs mt-16 tracking-widest animate-pulse font-light" style={{ fontFamily: '"Inter", sans-serif' }}>DRAG PAGE TO OPEN</p>
-                                </div>
-                            </div>
-
-                            {/* Inside Cover Left (Empty Parchment) */}
-                            <div className="page bg-[#f4ecd8] shadow-[inset_10px_0_20px_rgba(0,0,0,0.2)] relative">
-                                <div className="absolute inset-5 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-                                <div className="absolute inset-6 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-                            </div>
-
-                            {/* Inside Cover Right (Bismillah) */}
-                            <div className="page bg-[#fdfaf6] shadow-[inset_-10px_0_20px_rgba(0,0,0,0.2)] flex items-center justify-center relative">
-                                <div className="absolute inset-5 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-                                <div className="absolute inset-6 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-                                {surah.id !== 1 && surah.id !== 9 && (
-                                    <div className="absolute top-10 bottom-12 left-10 right-10 z-10 flex items-start justify-center pt-16">
-                                        <h2 className="text-[#1a1a1a] text-4xl drop-shadow-sm" style={{ fontFamily: 'Amiri, serif' }}>
-                                            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-                                        </h2>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Content Spreads */}
-                            {pages.map((chunk, index) => (
-                                [
-                                    // LEFT PAGE: Translations (English & Chinese)
-                                    <div key={`page-${index}-en-zh`} className="page bg-[#f4ecd8] text-[#2c2c2c] shadow-[inset_10px_0_20px_rgba(0,0,0,0.15)] relative">
-                                        <div className="absolute inset-5 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-                                        <div className="absolute inset-6 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-
-                                        <div className="absolute top-10 bottom-12 left-10 right-10 z-10">
-                                            <div className="h-full overflow-y-auto pr-6 custom-scrollbar text-justify pb-4">
-                                                {chunk.en.map((ayah, i) => (
-                                                    <div key={ayah.number} className="mb-8 leading-relaxed">
-                                                        <span className="text-[#8b0000] text-sm mr-2 font-bold inline-block align-top mt-1" style={{ fontFamily: '"Crimson Pro", serif' }}>{ayah.numberInSurah}.</span>
-                                                        <div className="inline-block" style={{ width: 'calc(100% - 30px)' }}>
-                                                            <p className="text-[17px] mb-3" style={{ fontFamily: '"Crimson Pro", serif', lineHeight: '1.6' }}>{ayah.text}</p>
-                                                            <p className="font-sans text-[14px] text-[#4a4a4a] tracking-wider leading-relaxed">
-                                                                {chunk.zh[i]?.text}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="absolute bottom-5 left-0 right-0 text-center text-[#d4a04a]/80 text-sm" style={{ fontFamily: '"Crimson Pro", serif' }}>{index * 2 + 1}</div>
-                                    </div>,
-
-                                    // RIGHT PAGE: Arabic Quran
-                                    <div key={`page-${index}-ar`} className="page bg-[#fdfaf6] text-[#1a1a1a] shadow-[inset_-10px_0_20px_rgba(0,0,0,0.15)] relative">
-                                        <div className="absolute inset-5 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-                                        <div className="absolute inset-6 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-
-                                        <div className="absolute top-10 bottom-12 left-10 right-10 z-10">
-                                            <div className="h-full overflow-y-auto pl-6 pr-2 custom-scrollbar pb-4" dir="rtl">
-                                                <div className="w-full text-justify" style={{ textAlignLast: 'center', lineHeight: '2.4' }}>
-                                                    {chunk.ar.map((ayah) => (
-                                                        <span key={ayah.number} className="inline font-normal text-[32px] text-[#1a1a1a]" style={{ fontFamily: 'Amiri, serif' }}>
-                                                            {ayah.text.replace('بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', '').trim()}
-                                                            <span className="inline-block mx-2 text-[#d4a04a] text-2xl whitespace-nowrap align-middle" dir="ltr" style={{ fontFamily: 'Amiri, serif' }}>
-                                                                ﴾{ayah.numberInSurah.toLocaleString('ar-SA')}﴿
-                                                            </span>
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="absolute bottom-5 left-0 right-0 text-center text-[#d4a04a]/80 text-sm" style={{ fontFamily: '"Crimson Pro", serif' }}>{index * 2 + 2}</div>
-                                    </div>
-                                ]
-                            )).flat()}
-
-                            {/* Back Cover Left */}
-                            <div className="page bg-[#f4ecd8] shadow-[inset_10px_0_20px_rgba(0,0,0,0.2)] flex items-center justify-center relative">
-                                <div className="absolute inset-5 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-                                <div className="absolute inset-6 border border-[#d4a04a]/30 pointer-events-none z-0"></div>
-                                <p className="text-[#1a1a1a] font-normal text-4xl" style={{ fontFamily: 'Amiri, serif' }}>صَدَقَ اللهُ العَظِيم</p>
-                            </div>
-
-                            {/* Back Cover */}
-                            <div className="page page-cover bg-[#2b1f13] border-[8px] border-double border-[#d4a04a] rounded-l-2xl shadow-[inset_5px_0_20px_rgba(0,0,0,0.8)] relative">
-                                <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/leather.png')]" />
-                            </div>
-
-                        </HTMLFlipBook>
+                        <div className="reader-arabic-title" dir="rtl" lang="ar">{surah.arabicName}</div>
+                    </div>
+                </header>
+                <div className="reader-toolbar">
+                    <div className="reader-toolbar-label"><BookOpen size={15} /><span>Read with presence</span></div>
+                    <div className="reader-translation-control">
+                        <label htmlFor={translationId}>Translation</label>
+                        <select id={translationId} value={translation} onChange={(event) => setTranslation(event.target.value as Translation)}>
+                            <option value="english">English · Asad</option>
+                            <option value="chinese">中文 · 马坚</option>
+                            <option value="none">Arabic only</option>
+                        </select>
+                    </div>
+                </div>
+                <div ref={contentRef} className="reader-content" tabIndex={0} aria-label="Surah verses" aria-busy={loading}>
+                    {loading && (
+                        <div className="reader-state" role="status">
+                            <LoaderCircle className="reader-spinner" size={28} />
+                            <h3>Opening the surah</h3>
+                            <p>Preparing the Arabic text and translations.</p>
+                        </div>
+                    )}
+                    {error && (
+                        <div className="reader-state" role="alert">
+                            <BookOpen size={28} />
+                            <h3>The text could not be loaded</h3>
+                            <p>{error}</p>
+                            <button className="reader-retry" onClick={() => setAttempt((value) => value + 1)}><RotateCcw size={15} />Try again</button>
+                        </div>
+                    )}
+                    {text && (
+                        <div className="reader-verses">
+                            {text.arabic.map((ayah) => (
+                                <article className="reader-verse" data-verse={ayah.numberInSurah} key={ayah.number}>
+                                    <div className="reader-verse-number" aria-label={`Verse ${surah.id}:${ayah.numberInSurah}`}>{surah.id}:{ayah.numberInSurah}</div>
+                                    <p className="reader-arabic" dir="rtl" lang="ar">{ayah.text} <span className="reader-ayah-marker">﴿{ayah.numberInSurah.toLocaleString('ar-SA')}﴾</span></p>
+                                    {translation !== 'none' && (
+                                        <p className={`reader-translation ${translation === 'chinese' ? 'reader-translation-chinese' : ''}`} lang={translation === 'chinese' ? 'zh' : 'en'}>
+                                            {text[translation].get(ayah.numberInSurah)?.text}
+                                        </p>
+                                    )}
+                                </article>
+                            ))}
+                            <div className="reader-end">End of {surah.name}<span>✦</span></div>
+                        </div>
                     )}
                 </div>
-            </motion.div>
-        </AnimatePresence>
+                <footer className="reader-footer">
+                    <span>Arabic: Uthmani · {translation === 'chinese' ? 'Translation: Ma Jian' : translation === 'english' ? 'Translation: Muhammad Asad' : 'Original Arabic'}<span className="reader-source"> · AlQuran Cloud</span></span>
+                    {text && <button onClick={() => contentRef.current?.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })} aria-label="Return to the first verse"><ArrowUp size={14} /><span>Top</span></button>}
+                </footer>
+            </div>
+        </SacredDialog>
     );
 }
-
-// Add CSS for custom scrollbar to global styles or via style tag
-<style dangerouslySetInnerHTML={{
-    __html: `
-.custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(245, 158, 11, 0.4);
-}
-`}} />

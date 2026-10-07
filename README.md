@@ -1,73 +1,30 @@
-# React + TypeScript + Vite
+# Nur of Dunya
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A quiet, responsive Quran reading experience built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+`npm run build` creates the production bundle in `dist`. `npm run lint` checks the source.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Experience
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Emerald and gold sanctuary with an accessible chapter carousel.
+- Swipe, horizontal trackpad, arrow keys, or arrow buttons to explore; `/` opens search.
+- Search 114 surahs by number, Arabic name, or transliteration, or browse 30 juz.
+- Responsive reading dialog with original Arabic and English, Chinese, or Arabic-only display.
+- Native dialogs support Escape, focus containment, and return focus to the opening control.
+- Reduced-motion preferences are respected; no continuously running carousel render loop.
+- Last opened chapter is stored on this device; successful texts are cached for the current session.
+
+## Text sources
+
+Arabic (`quran-uthmani`), Muhammad Asad English (`en.asad`), and Ma Jian Chinese (`zh.jian`) are loaded from [AlQuran Cloud](https://alquran.cloud). The reader preserves returned Arabic text and validates edition completeness and verse numbering before display. A 15-second timeout and retry state handle unavailable text services. Translations are interpretations of meaning.
+
+Juz starting surah and verse are aligned to the AlQuran Cloud API boundaries. Traditional juz names may reflect a different boundary convention. Existing thematic hadith records remain in `src/data/hadiths.json`; Quran quotations are not presented as hadith.
+
+The previous carousel import path remains available through `QuranCarousel.tsx`. Production publishing is a separate step from local preview.

@@ -1,0 +1,206 @@
+.sacred-dialog.reader-dialog {
+    width: min(960px, calc(100vw - 40px));
+    height: min(880px, calc(100dvh - 64px));
+    max-height: calc(100dvh - 64px);
+    padding: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #fbf8ef;
+    color: #28332d;
+}
+.reader-shell { height: 100%; min-width: 0; display: flex; flex-direction: column; }
+.reader-header {
+    flex-shrink: 0;
+    min-width: 0;
+    padding: 22px 38px 26px;
+    color: #fbf8ef;
+    background: #102923;
+    border-bottom: 1px solid #b89a5d55;
+}
+.reader-header-topline {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 38px;
+    align-items: center;
+    gap: 18px;
+}
+.reader-heading-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 26px;
+    margin-top: 8px;
+}
+.reader-heading-text { min-width: 0; }
+.reader-eyebrow {
+    min-width: 0;
+    color: #c5ac77;
+    font: 500 9px/1.8 Inter, sans-serif;
+    letter-spacing: .22em;
+    overflow-wrap: anywhere;
+}
+.reader-title {
+    min-width: 0;
+    font: 400 34px/1.4 'Crimson Pro', Georgia, serif;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+.reader-meta { margin-top: 4px; color: #bfccc3; font: 400 11px/1.8 Inter, sans-serif; letter-spacing: .06em; overflow-wrap: anywhere; }
+.reader-arabic-title {
+    min-width: 0;
+    color: #dcc28c;
+    font: 400 48px/2 Amiri, serif;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+.reader-close {
+    position: static;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid #dbca9d33;
+    border-radius: 50%;
+    background: #ffffff08;
+    color: #e9dfc6;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+}
+.reader-close:hover { background: #ffffff15; border-color: #dbca9d77; }
+.reader-close:focus-visible, .reader-toolbar select:focus-visible, .reader-retry:focus-visible, .reader-footer button:focus-visible { outline: 2px solid #c2a460; outline-offset: 4px; }
+.reader-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 18px;
+    padding: 16px 38px;
+    background: #f1ede1;
+    border-bottom: 1px solid #ded7c6;
+}
+.reader-toolbar-label { min-width: 0; display: flex; align-items: center; gap: 9px; color: #4c6557; font: 400 13px/1.7 'Crimson Pro', Georgia, serif; }
+.reader-toolbar-label svg { flex-shrink: 0; }
+.reader-toolbar-label span { overflow-wrap: anywhere; }
+.reader-translation-control { display: flex; flex-wrap: wrap; min-width: 0; max-width: 100%; align-items: center; gap: 8px 10px; }
+.reader-translation-control label { font: 500 10px/1.7 Inter, sans-serif; color: #6d7466; overflow-wrap: anywhere; }
+.reader-toolbar select {
+    min-width: 0;
+    max-width: 100%;
+    border: 1px solid #d9d1bc;
+    border-radius: 8px;
+    padding: 8px 24px 8px 10px;
+    background: #fbf8ef;
+    color: #2c4a3d;
+    font: 500 11px/1.7 Inter, sans-serif;
+    cursor: pointer;
+    color-scheme: light;
+}
+.reader-content { position: relative; flex: 1; min-width: 0; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 12px 52px 0; scrollbar-width: thin; scrollbar-color: #cbb88c #fbf8ef; }
+.reader-content::-webkit-scrollbar, .hadith-content::-webkit-scrollbar { display: block; width: 5px; }
+.reader-content::-webkit-scrollbar-thumb, .hadith-content::-webkit-scrollbar-thumb { background: #cbb88c; border-radius: 10px; }
+.reader-content:focus-visible, .hadith-content:focus-visible { outline: 2px solid #bc9f63; outline-offset: -4px; }
+.reader-state {
+    min-width: 0;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 35px 12px;
+    text-align: center;
+    color: #6d785f;
+}
+.reader-state > svg { flex-shrink: 0; }
+.reader-state h3 { max-width: 100%; color: #264335; font: 400 25px/1.5 'Crimson Pro', Georgia, serif; overflow-wrap: anywhere; }
+.reader-state p { max-width: min(350px, 100%); font: 400 12px/1.9 Inter, sans-serif; overflow-wrap: anywhere; }
+.reader-spinner { animation: reader-spin 1.5s linear infinite; }
+.reader-retry { display: flex; flex-shrink: 0; align-items: center; gap: 8px; max-width: 100%; margin-top: 8px; padding: 11px 19px; border: 1px solid #294837; border-radius: 30px; color: #fbf8ef; background: #214333; font: 500 11px/1.7 Inter, sans-serif; cursor: pointer; }
+.reader-verse { position: relative; min-width: 0; padding: 26px 0 32px; border-bottom: 1px solid #dfd7c5; }
+.reader-verse-number { color: #927642; font: 500 10px/1.8 Inter, sans-serif; letter-spacing: .12em; }
+.reader-arabic { margin-top: 14px; font: 400 31px/2.25 Amiri, serif; text-align: right; color: #243b2e; overflow-wrap: anywhere; }
+.reader-ayah-marker { color: #9a7b3e; white-space: nowrap; font-size: .82em; }
+.reader-translation { margin-top: 17px; color: #546252; font: 400 19px/1.8 'Crimson Pro', Georgia, serif; overflow-wrap: anywhere; }
+.reader-translation-chinese { font: 400 15px/2.1 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+.reader-end { padding: 35px 0 40px; text-align: center; color: #927642; font: italic 400 17px/1.8 'Crimson Pro', Georgia, serif; overflow-wrap: anywhere; }
+.reader-end span { display: block; margin-top: 16px; font-style: normal; }
+.reader-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    flex-shrink: 0;
+    min-width: 0;
+    gap: 12px;
+    padding: 14px 30px;
+    background: #f1ede1;
+    border-top: 1px solid #ded7c6;
+    color: #727961;
+    font: 400 10px/1.8 Inter, sans-serif;
+}
+.reader-footer > span { min-width: 0; overflow-wrap: anywhere; }
+.reader-footer button { display: flex; align-items: center; gap: 5px; padding: 4px 0; border: 0; background: transparent; color: #45604c; cursor: pointer; font: 500 10px/1.7 Inter, sans-serif; white-space: nowrap; }
+.reader-footer button svg { flex-shrink: 0; }
+.sacred-dialog.hadith-dialog { width: min(680px, calc(100vw - 40px)); max-height: calc(100dvh - 64px); padding: 0; overflow: hidden; border-radius: 20px; background: #102923; color: #f3efdf; }
+.hadith-shell { min-width: 0; display: flex; flex-direction: column; max-height: calc(100dvh - 64px); }
+.hadith-header {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr) 38px;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    min-width: 0;
+    padding: 20px 30px;
+    border-bottom: 1px solid #c2a46022;
+}
+.hadith-header-icon { color: #bda36c; }
+.hadith-content { overflow: auto; overscroll-behavior: contain; min-width: 0; min-height: 0; padding: 30px 50px 38px; text-align: center; scrollbar-width: thin; scrollbar-color: #a38b5c #102923; }
+.hadith-category { color: #b5c4b8; font: 400 10px/1.9 Inter, sans-serif; letter-spacing: .1em; overflow-wrap: anywhere; }
+.hadith-title { margin-top: 8px; font: 400 36px/1.5 'Crimson Pro', Georgia, serif; overflow-wrap: anywhere; }
+.hadith-ornament { display: flex; align-items: center; justify-content: center; gap: 14px; color: #bc9f63; margin: 22px 0 20px; font-size: 10px; }
+.hadith-ornament span { width: 50px; max-width: 25%; height: 1px; background: #bc9f6350; }
+.hadith-arabic { font: 400 30px/2.25 Amiri, serif; color: #e7d4a9; overflow-wrap: anywhere; }
+.hadith-english { margin-top: 22px; font: 400 22px/1.8 'Crimson Pro', Georgia, serif; color: #e3e9df; overflow-wrap: anywhere; }
+.hadith-source { display: inline-block; max-width: 100%; margin-top: 26px; padding: 10px 17px; border: 1px solid #bb9f6233; border-radius: 20px; color: #c9b783; font: 400 10px/1.9 Inter, sans-serif; overflow-wrap: anywhere; }
+.hadith-context { margin-top: 15px; font: 400 10px/1.9 Inter, sans-serif; color: #a2b3a5; overflow-wrap: anywhere; }
+.hadith-footer { flex-shrink: 0; border-top: 1px solid #c2a46022; padding: 15px; text-align: center; color: #a0ae9e; font: italic 400 14px/1.8 'Crimson Pro', Georgia, serif; overflow-wrap: anywhere; }
+@keyframes reader-spin { to { transform: rotate(360deg); } }
+@media (max-width: 800px) {
+    .reader-heading-layout { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .reader-arabic-title { text-align: left; font-size: 38px; }
+}
+@media (max-width: 640px) {
+    .sacred-dialog.reader-dialog, .sacred-dialog.hadith-dialog { width: calc(100vw - 20px); max-height: calc(100dvh - 24px); border-radius: 14px; }
+    .sacred-dialog.reader-dialog { height: calc(100dvh - 24px); }
+    .hadith-shell { max-height: calc(100dvh - 24px); }
+    .reader-header { padding: 16px 22px 18px; }
+    .reader-header-topline { grid-template-columns: minmax(0, 1fr) 34px; gap: 12px; }
+    .reader-heading-layout { margin-top: 9px; gap: 6px; }
+    .reader-title { font-size: 27px; }
+    .reader-eyebrow { font-size: 8px; letter-spacing: .15em; }
+    .reader-arabic-title { font-size: 31px; }
+    .reader-close { width: 34px; height: 34px; }
+    .reader-toolbar { padding: 12px 20px; gap: 10px; }
+    .reader-toolbar-label span { display: none; }
+    .reader-translation-control { gap: 7px; }
+    .reader-content { padding: 4px 23px 0; }
+    .reader-arabic { font-size: 27px; line-height: 2.25; }
+    .reader-translation { font-size: 18px; }
+    .reader-translation-chinese { font-size: 14px; }
+    .reader-footer { padding: 12px 20px; font-size: 9px; }
+    .hadith-header { grid-template-columns: 18px minmax(0, 1fr) 34px; padding: 18px 20px; }
+    .hadith-content { padding: 26px 24px 30px; }
+    .hadith-title { font-size: 30px; }
+    .hadith-arabic { font-size: 27px; }
+    .hadith-english { font-size: 20px; }
+}
+@media (max-height: 500px) {
+    .reader-header { padding-top: 10px; padding-bottom: 10px; }
+    .reader-heading-layout { gap: 0; margin-top: 0; }
+    .reader-title { font-size: 24px; }
+    .reader-arabic-title { font-size: 27px; line-height: 1.8; }
+    .reader-meta { margin-top: 0; }
+    .reader-toolbar, .reader-footer { padding-top: 8px; padding-bottom: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .reader-spinner { animation: none; } }

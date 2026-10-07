@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" fill="none">
+  <defs>
+    <linearGradient id="teal" x1="140" y1="180" x2="1350" y2="960" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#89b4c3" stop-opacity=".18"/>
+      <stop offset=".24" stop-color="#68aaa7" stop-opacity=".46"/>
+      <stop offset=".58" stop-color="#3b867b" stop-opacity=".10"/>
+      <stop offset="1" stop-color="#8ca886" stop-opacity=".36"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="180" y1="1020" x2="1380" y2="140" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a2ad7b" stop-opacity=".20"/>
+      <stop offset=".4" stop-color="#b9bd8a" stop-opacity=".04"/>
+      <stop offset="1" stop-color="#b6ad90" stop-opacity=".25"/>
+    </linearGradient>
+    <filter id="cloud" x="-30%" y="-50%" width="160%" height="200%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency=".004 .008" numOctaves="3" seed="23" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="150" xChannelSelector="R" yChannelSelector="B"/>
+      <feGaussianBlur stdDeviation="29"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="32"/>
+    </filter>
+  </defs>
+  <g filter="url(#cloud)">
+    <path d="M-160 215C190 130 420 400 635 500S1150 520 1780 940" stroke="url(#teal)" stroke-width="145"/>
+    <path d="M-160 305C210 125 360 560 650 570S1140 600 1770 1090" stroke="url(#teal)" stroke-width="62" opacity=".65"/>
+  </g>
+  <path d="M-120 1080C270 990 540 690 810 610S1240 480 1730 95" stroke="url(#warm)" stroke-width="88" filter="url(#soft)" opacity=".55"/>
+</svg>
