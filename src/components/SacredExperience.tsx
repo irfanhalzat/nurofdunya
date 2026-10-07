@@ -106,7 +106,7 @@ export default function SacredExperience() {
         <p className="quran-calligraphy" lang="ar" dir="rtl">القرآن الكريم</p>
         <div className="ornament-divider"><span /><Ornament /><span /></div>
         <h1>Light for the <em>heart.</em></h1>
-        <p className="hero-description">A quiet space to read, reflect, and find your way<br className="desktop-break" /> through the words of the Holy Quran.</p>
+        <p className="hero-description">A quiet space to read, listen, and reflect<br className="desktop-break" /> through the words of the Holy Quran.</p>
         <button className="primary-action" onClick={() => read(active)}><BookOpen size={17} />{selected === 0 ? 'Begin reading' : `Read ${active.transliterationName}`}<ArrowRight size={17} /></button>
         <div className="hero-meta"><span>114 SURAHS</span><span className="tiny-star">✦</span><span>30 JUZ</span><span className="tiny-star">✦</span><span>ONE GUIDANCE</span></div>
       </div></section>

@@ -119,6 +119,13 @@
 .reader-spinner { animation: reader-spin 1.5s linear infinite; }
 .reader-retry { display: flex; flex-shrink: 0; align-items: center; gap: 8px; max-width: 100%; margin-top: 8px; padding: 11px 19px; border: 1px solid #294837; border-radius: 30px; color: #fbf8ef; background: #214333; font: 500 11px/1.7 Inter, sans-serif; cursor: pointer; }
 .reader-verse { position: relative; min-width: 0; padding: 26px 0 32px; border-bottom: 1px solid #dfd7c5; }
+.reader-verse-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
+.reader-verse-active { background: linear-gradient(90deg, #c4b07912, #c4b07925, #c4b07912); }
+.reader-verse-active::before { content: ''; position: absolute; left: -13px; top: 26px; bottom: 32px; width: 2px; border-radius: 2px; background: #a68b50; }
+.reader-verse-play { display: inline-flex; align-items: center; justify-content: center; gap: 7px; flex-shrink: 0; min-width: 76px; min-height: 44px; padding: 8px 12px; border: 1px solid #c9bc9b; border-radius: 24px; background: transparent; color: #405c4b; font: 500 11px/1.6 Inter, sans-serif; cursor: pointer; transition: background .2s, border-color .2s; }
+.reader-verse-play[aria-pressed="true"] { background: #254a3a; border-color: #254a3a; color: #f9f4e6; }
+.reader-verse-play:hover { border-color: #788e6e; }
+.reader-verse-play:focus-visible { outline: 2px solid #9d834b; outline-offset: 3px; }
 .reader-verse-number { color: #927642; font: 500 10px/1.8 Inter, sans-serif; letter-spacing: .12em; }
 .reader-arabic { margin-top: 14px; font: 400 31px/2.25 Amiri, serif; text-align: right; color: #243b2e; overflow-wrap: anywhere; }
 .reader-ayah-marker { color: #9a7b3e; white-space: nowrap; font-size: .82em; }
@@ -142,6 +149,9 @@
 .reader-footer > span { min-width: 0; overflow-wrap: anywhere; }
 .reader-footer button { display: flex; align-items: center; gap: 5px; padding: 4px 0; border: 0; background: transparent; color: #45604c; cursor: pointer; font: 500 10px/1.7 Inter, sans-serif; white-space: nowrap; }
 .reader-footer button svg { flex-shrink: 0; }
+.reader-footer-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 4px 14px; }
+.reader-footer-actions button { min-height: 44px; }
+.reader-footer .reader-footer-audio { padding: 6px 8px; border: 1px solid #cfc4a9; border-radius: 20px; min-width: 56px; justify-content: center; }
 .sacred-dialog.hadith-dialog { width: min(680px, calc(100vw - 40px)); max-height: calc(100dvh - 64px); padding: 0; overflow: hidden; border-radius: 20px; background: #102923; color: #f3efdf; }
 .hadith-shell { min-width: 0; display: flex; flex-direction: column; max-height: calc(100dvh - 64px); }
 .hadith-header {
@@ -194,6 +204,12 @@
     .hadith-title { font-size: 30px; }
     .hadith-arabic { font-size: 27px; }
     .hadith-english { font-size: 20px; }
+}
+@media (max-width: 640px) and (max-height: 700px) {
+    .reader-heading-layout { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 12px; align-items: center; }
+    .reader-title { font-size: 25px; }
+    .reader-arabic-title { font-size: 29px; line-height: 1.9; text-align: right; }
+    .reader-header { padding-bottom: 14px; }
 }
 @media (max-height: 500px) {
     .reader-header { padding-top: 10px; padding-bottom: 10px; }

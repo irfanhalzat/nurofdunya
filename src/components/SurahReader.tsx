@@ -1,7 +1,9 @@
-import { useEffect, useId, useRef, useState } from 'react';
-import { ArrowUp, BookOpen, LoaderCircle, RotateCcw, X } from 'lucide-react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { ArrowUp, BookOpen, LoaderCircle, Pause, Play, RotateCcw, X } from 'lucide-react';
 import type { GraphNode } from '../types';
 import SacredDialog from './SacredDialog';
+import RecitationPlayer from './RecitationPlayer';
+import type { RecitationPlaybackState, RecitationPlayerHandle } from './RecitationPlayer';
 import './reader.css';
 
 interface SurahReaderProps {
@@ -58,6 +60,9 @@ export default function SurahReader({ surah, onClose, initialVerse = 1 }: SurahR
     const titleId = useId();
     const translationId = useId();
     const contentRef = useRef<HTMLDivElement>(null);
+    const playerRef = useRef<RecitationPlayerHandle>(null);
+    const [activeVerse, setActiveVerse] = useState<number | null>(null);
+    const [playbackState, setPlaybackState] = useState<RecitationPlaybackState>('idle');
     const [translation, setTranslation] = useState<Translation>('english');
     const [attempt, setAttempt] = useState(0);
     const [result, setResult] = useState<RequestResult>({ key: '', data: null, error: null });
@@ -65,6 +70,16 @@ export default function SurahReader({ surah, onClose, initialVerse = 1 }: SurahR
     const text = textCache.get(surah.id) ?? (result.key === requestKey ? result.data : null);
     const error = result.key === requestKey ? result.error : null;
     const loading = !text && !error;
+    const playbackRunning = playbackState === 'playing' || playbackState === 'loading';
+
+    const followVerse = useCallback((verse: number) => {
+        const content = contentRef.current;
+        const target = content?.querySelector<HTMLElement>(`[data-verse="${verse}"]`);
+        if (content && target) {
+            const top = target.getBoundingClientRect().top - content.getBoundingClientRect().top + content.scrollTop - 24;
+            content.scrollTo({ top, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+        }
+    }, []);
 
     useEffect(() => {
         if (textCache.has(surah.id)) return;
@@ -116,6 +131,7 @@ export default function SurahReader({ surah, onClose, initialVerse = 1 }: SurahR
         const verse = Math.min(Math.max(1, initialVerse), text.arabic.length);
         const frame = requestAnimationFrame(() => {
             const content = contentRef.current;
+            if (verse === 1) { content?.scrollTo({ top: 0, behavior: 'instant' }); return; }
             const target = content?.querySelector<HTMLElement>(`[data-verse="${verse}"]`);
             if (content && target) {
                 const top = target.getBoundingClientRect().top - content.getBoundingClientRect().top + content.scrollTop - 24;
@@ -169,25 +185,53 @@ export default function SurahReader({ surah, onClose, initialVerse = 1 }: SurahR
                         </div>
                     )}
                     {text && (
-                        <div className="reader-verses">
-                            {text.arabic.map((ayah) => (
-                                <article className="reader-verse" data-verse={ayah.numberInSurah} key={ayah.number}>
-                                    <div className="reader-verse-number" aria-label={`Verse ${surah.id}:${ayah.numberInSurah}`}>{surah.id}:{ayah.numberInSurah}</div>
-                                    <p className="reader-arabic" dir="rtl" lang="ar">{ayah.text} <span className="reader-ayah-marker">﴿{ayah.numberInSurah.toLocaleString('ar-SA')}﴾</span></p>
-                                    {translation !== 'none' && (
-                                        <p className={`reader-translation ${translation === 'chinese' ? 'reader-translation-chinese' : ''}`} lang={translation === 'chinese' ? 'zh' : 'en'}>
-                                            {text[translation].get(ayah.numberInSurah)?.text}
-                                        </p>
-                                    )}
-                                </article>
-                            ))}
-                            <div className="reader-end">End of {surah.name}<span>✦</span></div>
-                        </div>
+                        <>
+                            <RecitationPlayer
+                                ref={playerRef}
+                                surahId={surah.id}
+                                surahName={surah.name}
+                                ayahs={text.arabic}
+                                initialVerse={initialVerse}
+                                onActiveVerseChange={setActiveVerse}
+                                onPlaybackStateChange={setPlaybackState}
+                                onFollowVerse={followVerse}
+                            />
+                            <div className="reader-verses">
+                                {text.arabic.map((ayah) => (
+                                    <article className={`reader-verse${activeVerse === ayah.numberInSurah ? ' reader-verse-active' : ''}`} data-verse={ayah.numberInSurah} key={ayah.number}>
+                                        <div className="reader-verse-topline">
+                                            <div className="reader-verse-number" aria-label={`Verse ${surah.id}:${ayah.numberInSurah}`}>{surah.id}:{ayah.numberInSurah}</div>
+                                            <button
+                                                className="reader-verse-play"
+                                                aria-label={`${activeVerse === ayah.numberInSurah && playbackRunning ? 'Pause' : 'Play'} verse ${surah.id}:${ayah.numberInSurah}`}
+                                                aria-pressed={activeVerse === ayah.numberInSurah && playbackRunning}
+                                                onClick={() => playerRef.current?.playVerse(ayah.numberInSurah)}
+                                            >
+                                                {activeVerse === ayah.numberInSurah && playbackRunning ? <Pause size={14} /> : <Play size={14} />}
+                                                <span>{activeVerse === ayah.numberInSurah && playbackRunning ? 'Pause' : 'Listen'}</span>
+                                            </button>
+                                        </div>
+                                        <p className="reader-arabic" dir="rtl" lang="ar">{ayah.text} <span className="reader-ayah-marker">﴿{ayah.numberInSurah.toLocaleString('ar-SA')}﴾</span></p>
+                                        {translation !== 'none' && (
+                                            <p className={`reader-translation ${translation === 'chinese' ? 'reader-translation-chinese' : ''}`} lang={translation === 'chinese' ? 'zh' : 'en'}>
+                                                {text[translation].get(ayah.numberInSurah)?.text}
+                                            </p>
+                                        )}
+                                    </article>
+                                ))}
+                                <div className="reader-end">End of {surah.name}<span>✦</span></div>
+                            </div>
+                        </>
                     )}
                 </div>
                 <footer className="reader-footer">
                     <span>Arabic: Uthmani · {translation === 'chinese' ? 'Translation: Ma Jian' : translation === 'english' ? 'Translation: Muhammad Asad' : 'Original Arabic'}<span className="reader-source"> · AlQuran Cloud</span></span>
-                    {text && <button onClick={() => contentRef.current?.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })} aria-label="Return to the first verse"><ArrowUp size={14} /><span>Top</span></button>}
+                    {text && <div className="reader-footer-actions">
+                        {activeVerse !== null && <button className="reader-footer-audio" onClick={() => playerRef.current?.playVerse(activeVerse)} aria-label={`${playbackRunning ? 'Pause' : 'Resume'} recitation at verse ${surah.id}:${activeVerse}`}>
+                            {playbackRunning ? <Pause size={14} /> : <Play size={14} />}<span>{surah.id}:{activeVerse}</span>
+                        </button>}
+                        <button onClick={() => contentRef.current?.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })} aria-label="Return to the first verse"><ArrowUp size={14} /><span>Top</span></button>
+                    </div>}
                 </footer>
             </div>
         </SacredDialog>

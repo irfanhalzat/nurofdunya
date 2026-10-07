@@ -1,0 +1,56 @@
+.recitation-player {
+    min-width: 0;
+    margin: 14px 0 6px;
+    padding: 15px 19px 8px;
+    border: 1px solid #cdbb913d;
+    border-radius: 14px;
+    background: #edf0e8;
+    color: #264333;
+}
+.recitation-audio { display: none; }
+.recitation-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 18px; min-width: 0; }
+.recitation-intro { display: flex; align-items: center; gap: 8px; min-width: 0; color: #48604d; font: 400 15px/1.6 'Crimson Pro', Georgia, serif; }
+.recitation-intro svg { flex-shrink: 0; }
+.recitation-intro span { overflow-wrap: anywhere; }
+.recitation-reciter { min-width: 0; max-width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+.recitation-reciter label { color: #6a7661; font: 500 9px/1.7 Inter, sans-serif; }
+.recitation-reciter select { min-width: 0; max-width: 100%; min-height: 44px; padding: 8px 20px 8px 9px; border: 1px solid #bba67155; border-radius: 8px; background: #f8f8ee; color: #38533e; font: 400 10px/1.7 Inter, sans-serif; color-scheme: light; cursor: pointer; }
+.recitation-transport { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 4px; }
+.recitation-buttons { display: flex; flex-shrink: 0; gap: 4px; }
+.recitation-buttons button { display: grid; place-items: center; min-width: 44px; min-height: 44px; border: 1px solid transparent; border-radius: 50%; color: #527052; background: transparent; cursor: pointer; transition: background .2s; }
+.recitation-buttons button:hover:not(:disabled) { background: #2143330c; }
+.recitation-buttons button.recitation-play { background: #254b37; color: #f5efdf; border-color: #254b37; }
+.recitation-buttons button.recitation-play:hover:not(:disabled) { background: #365f45; }
+.recitation-buttons button:disabled { opacity: .35; cursor: default; }
+.recitation-now { min-width: 0; flex: 1; }
+.recitation-verse { color: #314b36; font: 500 11px/1.7 Inter, sans-serif; overflow-wrap: anywhere; }
+.recitation-verse span { color: #758369; font-weight: 400; }
+.recitation-status { min-width: 0; color: #788066; font: 400 10px/1.8 Inter, sans-serif; overflow-wrap: anywhere; }
+.recitation-progress { display: grid; grid-template-columns: 34px minmax(0, 1fr) 34px; align-items: center; gap: 8px; min-width: 0; margin-top: 2px; }
+.recitation-progress input { width: 100%; min-width: 0; height: 44px; margin: 0; accent-color: #967b40; cursor: pointer; }
+.recitation-progress input:disabled { opacity: .4; cursor: default; }
+.recitation-time { color: #798168; font: 400 9px/1.7 Inter, sans-serif; font-variant-numeric: tabular-nums; }
+.recitation-time:last-child { text-align: right; }
+.recitation-error { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 12px; min-width: 0; margin-top: 3px; padding: 9px 11px; border-radius: 8px; background: #8a5c3410; color: #785332; }
+.recitation-error p { flex: 1 1 160px; min-width: 0; font: 400 10px/1.9 Inter, sans-serif; overflow-wrap: anywhere; }
+.recitation-error button { display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 4px 6px; border: 0; border-radius: 6px; background: transparent; color: #6d522c; font: 500 10px/1.7 Inter, sans-serif; cursor: pointer; }
+.recitation-options { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; min-width: 0; gap: 0 12px; border-top: 1px solid #cdbb9133; }
+.recitation-follow { display: flex; align-items: center; gap: 7px; min-height: 44px; color: #65785c; font: 400 10px/1.7 Inter, sans-serif; cursor: pointer; }
+.recitation-follow input { width: 15px; height: 15px; flex-shrink: 0; margin: 0; accent-color: #56714d; cursor: pointer; }
+.recitation-follow span { overflow-wrap: anywhere; }
+.recitation-options a { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; color: #788066; font: 400 9px/1.7 Inter, sans-serif; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.recitation-player button:focus-visible, .recitation-player select:focus-visible, .recitation-player input:focus-visible, .recitation-player a:focus-visible { outline: 2px solid #ac9155; outline-offset: 3px; }
+.recitation-spinner { animation: recitation-spin 1.5s linear infinite; }
+.recitation-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@keyframes recitation-spin { to { transform: rotate(360deg); } }
+@media (max-width: 640px) {
+    .recitation-player { padding: 12px 12px 4px; border-radius: 11px; }
+    .recitation-intro { font-size: 14px; }
+    .recitation-reciter { width: 100%; flex-wrap: nowrap; }
+    .recitation-reciter select { flex: 1; width: 100%; }
+    .recitation-transport { gap: 6px; }
+    .recitation-buttons { gap: 0; }
+    .recitation-now { flex-basis: 56px; }
+    .recitation-options { gap: 0 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .recitation-spinner { animation: none; } .recitation-buttons button { transition: none; } }
